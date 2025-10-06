@@ -18,5 +18,5 @@ Principais funcionalidades:
 - Modificar estoque (Admin)
 
 Tecnologias utilizadas:
--Liguagem: Python
--Modelo UML: PlantUML
+- Liguagem: Python
+- Modelo UML: PlantUML
