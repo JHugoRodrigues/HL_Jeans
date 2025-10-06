@@ -2,7 +2,7 @@
 
 Projeto acadêmico de sistema de vendas online
 
-Integrantes: José Hugo Rodrigues de Souza
+Integrantes: José Hugo Rodrigues de Souza /n
              Lucas Nascimento Barros
 
 Este é um projeto desenvolvido para a disciplina Projeto de Software do curso de Engenharia de Software da Universidade de Pernambuco. Nosso objetivo é criar um sistema de computador conectado a um banco de dados relacional, executável pelo terminal.
