@@ -22,8 +22,8 @@ Cliente --> Compra
 
 Admin --> Modificar
 Admin --> Pedidos
-
-Compra <.. Carrinho : "inclui"
-Carrinho <.. Login : "inclui"
+Admin --> Login
 
 @enduml
+
+
