@@ -1,29 +1,56 @@
-@startuml Sistema
+@startuml HL_Jeans
 left to right direction
 skinparam packageStyle rectangle
+skinparam actorStyle awesome
+skinparam shadowing false
+skinparam usecase {
+  BackgroundColor #EFEFEF
+  BorderColor #2D3E50
+  ArrowColor #2D3E50
+}
+
 actor "Cliente" as Cliente
 actor "Administrador" as Admin
 
-rectangle "HL Jeans" {
+rectangle "HL Jeans - Sistema de Vendas Online" {
+    
     (Cadastrar-se) as Cadastrar
     (Fazer login) as Login
-    (Pesquisar produto) as Pesquisa
-    (Adicionar ao carrinho) as Carrinho
-    (Finalizar compra) as Compra
-    (Modificar estoque) as Modificar
-    (Gerenciar pedidos) as Pedidos
+    (Pesquisar produtos) as Pesquisar
+    (Adicionar produto ao carrinho) as AdicionarCarrinho
+    (Remover produto do carrinho) as RemoverCarrinho
+    (Visualizar carrinho) as VerCarrinho
+    (Finalizar compra) as FinalizarCompra
+    (Visualizar histórico de compras) as Historico
+    (Efetuar pagamento) as Pagamento
+    
+    (Gerenciar produtos) as GerenciarProdutos
+    (Modificar estoque) as ModificarEstoque
+    (Cadastrar novo produto) as CadastrarProduto
+    (Remover produto) as RemoverProduto
+    (Gerenciar pedidos) as GerenciarPedidos
 }
 
+' --- Relacionamentos do Cliente ---
 Cliente --> Cadastrar
 Cliente --> Login
-Cliente --> Pesquisa
-Cliente --> Carrinho
-Cliente --> Compra
+Cliente --> Pesquisar
+Cliente --> AdicionarCarrinho
+Cliente --> RemoverCarrinho
+Cliente --> VerCarrinho
+Cliente --> FinalizarCompra
+Cliente --> Historico
 
-Admin --> Modificar
-Admin --> Pedidos
+FinalizarCompra --> Pagamento : <<inclui>>
+
+' --- Relacionamentos do Administrador ---
 Admin --> Login
+Admin --> GerenciarProdutos
+Admin --> GerenciarPedidos
+
+GerenciarProdutos --> ModificarEstoque : <<inclui>>
+GerenciarProdutos --> CadastrarProduto : <<inclui>>
+GerenciarProdutos --> RemoverProduto : <<inclui>>
 
 @enduml
-
 
