@@ -12,45 +12,39 @@ skinparam usecase {
 actor "Cliente" as Cliente
 actor "Administrador" as Admin
 
-rectangle "HL Jeans - Sistema de Vendas Online" {
+rectangle "HL Jeans" {
     
-    (Cadastrar-se) as Cadastrar
+    ' Funcionalidades centrais
     (Fazer login) as Login
-    (Pesquisar produtos) as Pesquisar
+    (Listar produtos) as Listar
+    
+    ' Funcionalidades do Cliente
+    (Cadastrar-se) as Cadastrar
+    (Pesquisar produto) as Pesquisar
     (Adicionar produto ao carrinho) as AdicionarCarrinho
-    (Remover produto do carrinho) as RemoverCarrinho
     (Visualizar carrinho) as VerCarrinho
     (Finalizar compra) as FinalizarCompra
-    (Visualizar histórico de compras) as Historico
-    (Efetuar pagamento) as Pagamento
-    
-    (Gerenciar produtos) as GerenciarProdutos
-    (Modificar estoque) as ModificarEstoque
-    (Cadastrar novo produto) as CadastrarProduto
-    (Remover produto) as RemoverProduto
-    (Gerenciar pedidos) as GerenciarPedidos
+    (Exibir resumo do pedido) as ExibirResumo
 }
 
 ' --- Relacionamentos do Cliente ---
 Cliente --> Cadastrar
 Cliente --> Login
+Cliente --> Listar
 Cliente --> Pesquisar
 Cliente --> AdicionarCarrinho
-Cliente --> RemoverCarrinho
 Cliente --> VerCarrinho
 Cliente --> FinalizarCompra
-Cliente --> Historico
-
-FinalizarCompra --> Pagamento : <<inclui>>
 
 ' --- Relacionamentos do Administrador ---
 Admin --> Login
-Admin --> GerenciarProdutos
-Admin --> GerenciarPedidos
+Admin --> Listar 
 
-GerenciarProdutos --> ModificarEstoque : <<inclui>>
-GerenciarProdutos --> CadastrarProduto : <<inclui>>
-GerenciarProdutos --> RemoverProduto : <<inclui>>
+' --- Relações de Inclusão (<<inclui>>) ---
+' Para adicionar, o sistema *sempre* inclui a pesquisa
+(AdicionarCarrinho) ..> (Pesquisar) : <<inclui>>
+
+' Para finalizar, o sistema *sempre* exibe o resumo e limpa o carrinho
+(FinalizarCompra) ..> (ExibirResumo) : <<inclui>>
 
 @enduml
-
