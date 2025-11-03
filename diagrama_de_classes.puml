@@ -1,4 +1,4 @@
-@startuml HLJeansSimplificado_MVC
+@startuml HLJeans
 skinparam packageStyle rectangle
 skinparam shadowing false
 skinparam classAttributeIconSize 0
