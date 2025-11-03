@@ -1,0 +1,71 @@
+@startuml HLJeansSimplificado_MVC
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+
+left to right direction
+
+' =============================
+' ========== MODEL ============
+' =============================
+package "Model" {
+  class Usuario {
+    - nome: String
+    - email: String
+    - senha: String
+  }
+
+  class Produto {
+    - nome: String
+    - preco: double
+    - estoque: int
+  }
+
+  class Carrinho {
+    - itens: Map<Produto, Integer>
+    + adicionar(produto: Produto, qtd: int)
+    + remover(produto: Produto)
+    + calcularTotal(): double
+  }
+
+  class Pedido {
+    - itens: Map<Produto, Integer>
+    - total: double
+    + exibirResumo(): void
+  }
+
+  Usuario "1" --> "1" Carrinho
+  Carrinho "1" --> "*" Produto
+}
+
+' =============================
+' ======== CONTROLLER =========
+' =============================
+package "Controller" {
+  class SistemaController {
+    + cadastrarUsuario(nome: String, email: String, senha: String)
+    + login(email: String, senha: String)
+    + listarProdutos()
+    + adicionarAoCarrinho(produto: Produto, qtd: int)
+    + finalizarCompra()
+  }
+}
+
+' =============================
+' ============ VIEW ===========
+' =============================
+package "View" {
+  class MenuView {
+    + exibirMenuPrincipal()
+    + exibirProdutos()
+    + exibirCarrinho()
+  }
+}
+
+' =============================
+' ======= RELAÇÕES =============
+' =============================
+View ..> Controller : chama métodos >
+Controller ..> Model : acessa dados >
+
+@enduml
