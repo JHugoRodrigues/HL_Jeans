@@ -3,6 +3,11 @@ package view;
 import java.util.Scanner;
 import controller.SistemaController;
 import model.*;
+import model.entities.ProdutoAbstrato;
+import model.factories.FabricaAbstrata;
+import model.factories.FabricaCalcaJeans;
+import model.factories.FabricaJaquetaJeans;
+import model.factories.FabricaShortsJeans;
 
 public class MenuPrincipal {
     public static void main(String[] args) {
@@ -17,6 +22,15 @@ public class MenuPrincipal {
         sistema.cadastrarUsuario(cliente);
 
         // Produtos de exemplo
+        FabricaAbstrata fabricaCalca = new FabricaCalcaJeans();
+        FabricaAbstrata fabricaJaqueta = new FabricaJaquetaJeans();
+        FabricaAbstrata fabricaShort = new FabricaShortsJeans();
+
+        //Falta testar!
+        ProdutoAbstrato p1 = fabricaCalca.criarProduto("HL Premium", 4, 159.90);
+        ProdutoAbstrato p2 = fabricaJaqueta.criarProduto("HL Comfort", 6, 229.90);
+        ProdutoAbstrato p3 = fabricaShort.criarProduto("HL Summer", 10, 119.90);
+        
         sistema.getEstoque().adicionarProduto(new Produto("Camisa Jeans", 10, 89.90));
         sistema.getEstoque().adicionarProduto(new Produto("Calça Skinny", 5, 149.90));
 
