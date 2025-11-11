@@ -16,3 +16,4 @@ public class Administrador extends Usuario {
         this.cargo = cargo;
     }
 }
+
