@@ -7,7 +7,7 @@ Lucas Nascimento Barros
 
 # 🏫 Informações do Projeto
 
-Projeto desenvolvido para a disciplina Projeto de Software, do curso de Engenharia de Software da Universidade de Pernambuco (UPE). 
+Projeto desenvolvido para o curso de Engenharia de Software da Universidade de Pernambuco (UPE). 
 
 # 🎯 Contexto e Objetivo
 
