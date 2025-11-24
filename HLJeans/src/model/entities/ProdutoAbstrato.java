@@ -11,7 +11,7 @@ public abstract class ProdutoAbstrato {
         this.preco = preco;
     }
 
-	protected boolean verificarDisponibilidade(int qtdPedido) {
+	public boolean verificarDisponibilidade(int qtdPedido) {
         return this.qtdEstoque >= qtdPedido;
     }
 
@@ -19,15 +19,15 @@ public abstract class ProdutoAbstrato {
         this.qtdEstoque -= qtdComprada;
     }
 
-	protected String getNome() {
+	public String getNome() {
         return nome;
     }
 
-	protected int getQtdEstoque() {
+	public int getQtdEstoque() {
         return qtdEstoque;
     }
 
-	protected double getPreco() {
+	public double getPreco() {
         return preco;
     }
 

@@ -3,10 +3,12 @@ package model;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Carrinho {
-    private Map<Produto, Integer> itens = new HashMap<>();
+import model.entities.ProdutoAbstrato;
 
-    public void adicionarProduto(Produto produto, int quantidade) {
+public class Carrinho {
+    private Map<ProdutoAbstrato, Integer> itens = new HashMap<>();
+
+    public void adicionarProduto(ProdutoAbstrato produto, int quantidade) {
         if (produto.verificarDisponibilidade(quantidade)) {
             itens.put(produto, itens.getOrDefault(produto, 0) + quantidade);
             System.out.println(quantidade + "x " + produto.getNome() + " adicionado(s) ao carrinho.");
@@ -15,14 +17,14 @@ public class Carrinho {
         }
     }
 
-    public void removerProduto(Produto produto) {
+    public void removerProduto(ProdutoAbstrato produto) {
         itens.remove(produto);
         System.out.println("Produto removido do carrinho.");
     }
 
     public double calcularTotal() {
         double total = 0;
-        for (Produto p : itens.keySet()) {
+        for (ProdutoAbstrato p : itens.keySet()) {
             total += p.getPreco() * itens.get(p);
         }
         return total;
@@ -33,13 +35,13 @@ public class Carrinho {
             System.out.println("Carrinho vazio!");
             return;
         }
-        for (Produto p : itens.keySet()) {
+        for (ProdutoAbstrato p : itens.keySet()) {
             System.out.println(p.getNome() + " - Qtd: " + itens.get(p) + " - R$" + p.getPreco());
         }
         System.out.println("Total: R$" + calcularTotal());
     }
 
-    public Map<Produto, Integer> getItens() {
+    public Map<ProdutoAbstrato, Integer> getItens() {
         return itens;
     }
 

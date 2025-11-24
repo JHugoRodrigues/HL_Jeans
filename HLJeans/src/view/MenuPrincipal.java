@@ -31,8 +31,9 @@ public class MenuPrincipal {
         ProdutoAbstrato p2 = fabricaJaqueta.criarProduto("HL Comfort", 6, 229.90);
         ProdutoAbstrato p3 = fabricaShort.criarProduto("HL Summer", 10, 119.90);
         
-        sistema.getEstoque().adicionarProduto(new Produto("Camisa Jeans", 10, 89.90));
-        sistema.getEstoque().adicionarProduto(new Produto("Calça Skinny", 5, 149.90));
+        sistema.getEstoque().adicionarProduto(p1);
+        
+       
 
         System.out.println("=== HL JEANS ===");
         System.out.print("Email: ");
@@ -67,7 +68,7 @@ public class MenuPrincipal {
                     case 2:
                         System.out.print("Nome do produto: ");
                         String nomeProd = sc.nextLine();
-                        Produto p = sistema.getEstoque().buscarProduto(nomeProd);
+                        ProdutoAbstrato p = sistema.getEstoque().buscarProduto(nomeProd);
                         if (p == null) {
                             System.out.println("Produto não encontrado!");
                         } else {
