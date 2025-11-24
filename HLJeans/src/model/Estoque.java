@@ -3,22 +3,27 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Estoque {
-    private List<Produto> produtos = new ArrayList<>();
+import model.entities.ProdutoAbstrato;
+import model.factories.FabricaAbstrata;
+import model.factories.FabricaCalcaJeans;
 
-    public void adicionarProduto(Produto produto) {
+public class Estoque {
+    private List<ProdutoAbstrato> produtos = new ArrayList<>();
+
+ 
+    public void adicionarProduto(ProdutoAbstrato produto) {
         produtos.add(produto);
     }
 
     public void listarProdutos() {
         System.out.println("\n=== Produtos Disponíveis ===");
-        for (Produto p : produtos) {
+        for (ProdutoAbstrato p : produtos) {
             System.out.println(p.getNome() + " - Estoque: " + p.getQtdEstoque() + " - R$" + p.getPreco());
         }
     }
 
-    public Produto buscarProduto(String nome) {
-        for (Produto p : produtos) {
+    public ProdutoAbstrato buscarProduto(String nome) {
+        for (ProdutoAbstrato p : produtos) {
             if (p.getNome().equalsIgnoreCase(nome)) {
                 return p;
             }
