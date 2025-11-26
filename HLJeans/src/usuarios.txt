@@ -1,0 +1,3 @@
+ADMIN;Admin;admin@hljeans.com;1234;Gerente
+CLIENTE;Hugo;hugo@email.com;123;Rua A, 123
+CLIENTE;Hugo Rodrigues;hugo.rodrigues@email.com;12345;Rua Fictícia, 274
