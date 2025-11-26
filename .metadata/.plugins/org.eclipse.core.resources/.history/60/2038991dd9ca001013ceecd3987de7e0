@@ -1,0 +1,115 @@
+package controller;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import model.*;
+import model.entities.ProdutoAbstrato;
+
+
+public class ManipuladorArquivoEstoque {
+
+	    private static ManipuladorArquivoEstoque instance;
+	    private static final String FILE_PATH = "C:\\Users\\97381\\OneDrive\\Área de Trabalho\\Projeto HL\\HL_Jeans\\HLJeans\\src\\estoque.txt";
+
+	    // Evita instanciar diretamente
+	    public ManipuladorArquivoEstoque() {
+	        criarArquivoSeNaoExistir();
+	    }
+
+	    // Singleton thread-safe simples (suficiente para seu projeto)
+	    public static synchronized ManipuladorArquivoEstoque getInstance() {
+	        if (instance == null) {
+	            instance = new ManipuladorArquivoEstoque();
+	        }
+	        return instance;
+	    }
+
+	    // Garante que o arquivo existe
+	    private void criarArquivoSeNaoExistir() {
+	        File file = new File(FILE_PATH);
+	        try {
+	            if (!file.exists()) {
+	                file.createNewFile();
+	            }
+	        } catch (IOException e) {
+	            throw new RuntimeException("Erro ao criar arquivo de estoque!", e);
+	        }
+	    }
+	    
+	    private List<ProdutoAbstrato> produtos = new ArrayList<>();
+	    
+	    public void adicionarProduto(ProdutoAbstrato produto) {
+	        produtos.add(produto);
+	    }
+	    
+	    public void listarProdutos() {
+	        System.out.println("\n=== Produtos Disponíveis ===");
+	        for (ProdutoAbstrato p : produtos) {
+	            System.out.println(p.getNome() + " - Estoque: " + p.getQtdEstoque() + " - R$" + p.getPreco());
+	        }
+	    }
+	    
+	    public void salvarEstoque() {
+	    	try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
+	    		for (ProdutoAbstrato p : produtos) {
+	    			writer.write(p.getNome() + ";" + p.getPreco() + ";" + p.getQtdEstoque());
+	    			writer.newLine();
+	    		}
+	    	 }
+	    catch (IOException e) {
+	        throw new RuntimeException("Erro ao salvar produtos!", e);
+	    }
+	    }
+	    
+
+
+	    /**
+	     * Salva o estoque inteiro no TXT.
+	     * Map<Integer, Integer> → idProduto → quantidade
+	     * 
+	     * 
+	     *//*
+	    public void salvarEstoque(Map<String, Integer> estoque) {
+	        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
+
+	            for (Map.Entry<String, Integer> entry : estoque.entrySet()) {
+	                writer.write(entry.getKey() + ";" + entry.getValue()); 
+	                writer.newLine();
+	            }
+
+	        } catch (IOException e) {
+	            throw new RuntimeException("Erro ao salvar estoque!", e);
+	        }
+	    }*/
+
+	    /**
+	     * Carrega o estoque do TXT.
+	     * Retorna um Map com idProduto → quantidade
+	     */
+	    public Map<String, Integer> carregarEstoque() {
+	        Map<String, Integer> estoque = new HashMap<>();
+
+	        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+
+	            String linha;
+	            while ((linha = reader.readLine()) != null) {
+	                String[] partes = linha.split(";");
+	                if (partes.length == 2) {
+	                    String nome = partes[0];
+	                    int quantidade = Integer.parseInt(partes[1]);
+	                    estoque.put(nome, quantidade);
+	                }
+	            }
+
+	        } catch (IOException e) {
+	            throw new RuntimeException("Erro ao carregar estoque!", e);
+	        }
+
+	        return estoque;
+	    }
+	}
+
+	
+

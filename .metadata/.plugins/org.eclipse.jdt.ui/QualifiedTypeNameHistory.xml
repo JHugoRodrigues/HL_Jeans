@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="model.entities.ShortsJeans"/>
+    <fullyQualifiedTypeName name="model.entities.JaquetaJeans"/>
+    <fullyQualifiedTypeName name="model.factories.FabricaCalcaJeans"/>
+    <fullyQualifiedTypeName name="model.factories.FabricaAbstrata"/>
+    <fullyQualifiedTypeName name="model.entities.ProdutoAbstrato"/>
+</qualifiedTypeNameHistroy>

@@ -1,0 +1,82 @@
+package controller;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
+
+
+public class ManipuladorArquivoEstoque {
+
+	    private static ManipuladorArquivoEstoque instance;
+	    private static final String FILE_PATH = "C:\\Users\\97381\\OneDrive\\Área de Trabalho\\Projeto HL\\HL_Jeans\\HLJeans\\src\\estoque.txt";
+
+	    // Evita instanciar diretamente
+	    private ManipuladorArquivoEstoque() {
+	        criarArquivoSeNaoExistir();
+	    }
+
+	    // Singleton thread-safe simples (suficiente para seu projeto)
+	    public static synchronized ManipuladorArquivoEstoque getInstance() {
+	        if (instance == null) {
+	            instance = new ManipuladorArquivoEstoque();
+	        }
+	        return instance;
+	    }
+
+	    // Garante que o arquivo existe
+	    private void criarArquivoSeNaoExistir() {
+	        File file = new File(FILE_PATH);
+	        try {
+	            if (!file.exists()) {
+	                file.createNewFile();
+	            }
+	        } catch (IOException e) {
+	            throw new RuntimeException("Erro ao criar arquivo de estoque!", e);
+	        }
+	    }
+
+	    /**
+	     * Salva o estoque inteiro no TXT.
+	     * Map<Integer, Integer> → idProduto → quantidade
+	     */
+	    public void salvarEstoque(Map<Integer, Integer> estoque) {
+	        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
+
+	            for (Map.Entry<Integer, Integer> entry : estoque.entrySet()) {
+	                writer.write(entry.getKey() + ";" + entry.getValue()); 
+	                writer.newLine();
+	            }
+
+	        } catch (IOException e) {
+	            throw new RuntimeException("Erro ao salvar estoque!", e);
+	        }
+	    }
+
+	    /**
+	     * Carrega o estoque do TXT.
+	     * Retorna um Map com idProduto → quantidade
+	     */
+	    public Map<Integer, Integer> carregarEstoque() {
+	        Map<Integer, Integer> estoque = new HashMap<>();
+
+	        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+
+	            String linha;
+	            while ((linha = reader.readLine()) != null) {
+	                String[] partes = linha.split(";");
+	                if (partes.length == 2) {
+	                    int id = Integer.parseInt(partes[0]);
+	                    int quantidade = Integer.parseInt(partes[1]);
+	                    estoque.put(id, quantidade);
+	                }
+	            }
+
+	        } catch (IOException e) {
+	            throw new RuntimeException("Erro ao carregar estoque!", e);
+	        }
+
+	        return estoque;
+	    }
+	}
+
+	
+

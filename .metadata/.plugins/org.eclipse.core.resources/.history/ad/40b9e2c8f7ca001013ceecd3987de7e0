@@ -1,0 +1,107 @@
+package controller;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import model.*;
+import model.entities.ProdutoAbstrato;
+
+
+public class ManipuladorArquivoEstoque {
+	
+	 model.factories.FabricaAbstrata fabricaCalca = new model.factories.FabricaCalcaJeans();
+	 model.factories.FabricaAbstrata fabricaJaqueta = new model.factories.FabricaJaquetaJeans();
+	 model.factories.FabricaAbstrata fabricaShorts = new model.factories.FabricaShortsJeans();
+
+	    private static ManipuladorArquivoEstoque instance;
+	    private static final String FILE_PATH = "C:\\Users\\97381\\OneDrive\\Área de Trabalho\\Projeto HL\\HL_Jeans\\HLJeans\\src\\estoque.txt";
+
+	    // Singleton thread-safe simples (suficiente para seu projeto)
+	    public static synchronized ManipuladorArquivoEstoque getInstance() {
+	        if (instance == null) {
+	            instance = new ManipuladorArquivoEstoque();
+	        }
+	        return instance;
+	    }
+	    
+	    // Evita instanciar diretamente
+	    public ManipuladorArquivoEstoque() {
+	        criarArquivoSeNaoExistir();
+	    }
+
+	    // Garante que o arquivo existe
+	    private void criarArquivoSeNaoExistir() {
+	        File file = new File(FILE_PATH);
+	        try {
+	            if (!file.exists()) {
+	                file.createNewFile();
+	            }
+	        } catch (IOException e) {
+	            throw new RuntimeException("Erro ao criar arquivo de estoque!", e);
+	        }
+	    }
+	    
+	    public List<ProdutoAbstrato> produtos = new ArrayList<>();
+	    
+	    public List<ProdutoAbstrato> produtoPesquisado = new ArrayList<>();
+	    
+	    public void adicionarProduto(ProdutoAbstrato produto) {
+	        produtos.add(produto);
+	    }
+	    
+	    public void atualizarEstoque(String nomeProduto, int venda) {
+	        for (ProdutoAbstrato p : produtoPesquisado) {
+	            if (p.getNome().equalsIgnoreCase(nomeProduto)) {
+	            	int novaQuantidade= p.getQtdEstoque() - venda;
+	                p.setQtdEstoque(novaQuantidade);
+	                break;
+	            }
+	        }
+	    }
+	    
+	    public ProdutoAbstrato pesquisarProduto(String nomeProduto) {
+	        for (ProdutoAbstrato p : produtoPesquisado) {
+	            if (p.getNome().equalsIgnoreCase(nomeProduto)) {
+	                return p;
+	            }
+	        }
+			return null;
+	       }
+	    
+	    public void salvarEstoque() {
+	    	try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
+	    		for (ProdutoAbstrato p : produtoPesquisado) {
+	    			writer.write(p.getNome() + ";" + p.getPreco() + ";" + p.getQtdEstoque());
+	    			writer.newLine();
+	    		}
+	    	 }
+	    catch (IOException e) {
+	        throw new RuntimeException("Erro ao salvar produtos!", e);
+	    }
+	    }
+	    
+	    
+	    public ProdutoAbstrato carregarEstoque() {
+	    	try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+	    		System.out.println("\n=== Produtos Disponíveis ===");
+		        String linha;
+		        while ((linha = reader.readLine()) != null) {
+		            String[] partes = linha.split(";");
+		            if (partes.length >= 3) {
+		                String nome = partes[0];
+		                double preco = Double.parseDouble(partes[1]);
+		                int qtd   = Integer.parseInt(partes[2]);		               		                
+		                System.out.println(nome + ", " + preco + ", " + qtd);
+		                ProdutoAbstrato p = fabricaCalca.criarProduto(nome, qtd, preco);
+		                produtoPesquisado.add(p);
+		            }
+		        }
+		    } catch (IOException e) {
+		        throw new RuntimeException("Erro ao carregar produtos!", e);
+		    }
+			return null;
+	    }
+	    
+	}
+
+	
+

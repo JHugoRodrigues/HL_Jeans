@@ -1,0 +1,32 @@
+package model;
+import java.util.ArrayList;
+import java.util.List;
+import controller.ManipuladorArquivoEstoque;
+import model.entities.ProdutoAbstrato;
+import model.factories.FabricaAbstrata;
+import model.factories.FabricaCalcaJeans;
+
+public class Estoque {
+    private List<ProdutoAbstrato> produtos = new ArrayList<>();
+
+ 
+    public void adicionarProduto(ProdutoAbstrato produto) {
+        produtos.add(produto);
+    }
+
+    public void listarProdutos() {
+        System.out.println("\n=== Produtos Disponíveis ===");
+        for (ProdutoAbstrato p : produtos) {
+            System.out.println(p.getNome() + " - Estoque: " + p.getQtdEstoque() + " - R$" + p.getPreco());
+        }
+    }
+
+    public ProdutoAbstrato buscarProduto(String nome) {
+        for (ProdutoAbstrato p : produtos) {
+            if (p.getNome().equalsIgnoreCase(nome)) {
+                return p;
+            }
+        }
+        return null;
+    }
+}
