@@ -1,3 +1,0 @@
-HL Premium;159.9;4
-HL Comfort;229.9;6
-HL Summer;119.9;10
