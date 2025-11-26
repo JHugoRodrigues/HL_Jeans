@@ -5,7 +5,7 @@ public abstract class ProdutoAbstrato {
 	protected int qtdEstoque;
 	protected double preco;
 
-	protected ProdutoAbstrato(String nome, int qtdEstoque, double preco) {
+	public ProdutoAbstrato(String nome, int qtdEstoque, double preco) {
         this.nome = nome;
         this.qtdEstoque = qtdEstoque;
         this.preco = preco;
@@ -31,7 +31,9 @@ public abstract class ProdutoAbstrato {
         return preco;
     }
 
-	protected void setQtdEstoque(int qtdEstoque) {
+	public void setQtdEstoque(int qtdEstoque) {
         this.qtdEstoque = qtdEstoque;
     }
+
+
 }

@@ -1,5 +1,4 @@
 package model;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,5 +46,24 @@ public class Carrinho {
 
     public void limpar() {
         itens.clear();
+    }
+    
+    public String retornarProduto() {
+    	String nome = "";
+    	for (Map.Entry<ProdutoAbstrato, Integer> itens : itens.entrySet()) {
+    	    ProdutoAbstrato produto = itens.getKey();
+    	    nome = produto.getNome();
+    	    
+    	}
+		return nome;
+    }
+    
+    public int retornarQtd() {
+    	int qtd = 0;
+    	for (Map.Entry<ProdutoAbstrato, Integer> itens : itens.entrySet()) {
+    	    qtd = itens.getValue();
+    	    return qtd;
+    	}
+		return qtd;
     }
 }
