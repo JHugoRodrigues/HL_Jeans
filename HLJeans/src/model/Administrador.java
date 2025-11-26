@@ -1,5 +1,7 @@
 package model;
 
+import model.entities.ProdutoAbstrato;
+
 public class Administrador extends Usuario {
     private String cargo;
 
@@ -15,5 +17,9 @@ public class Administrador extends Usuario {
     public void setCargo(String cargo) {
         this.cargo = cargo;
     }
+    
+    //public void criarProduto(String nomeProd, int qtdProd, double precoProd) {
+    	
+    //}
 }
 

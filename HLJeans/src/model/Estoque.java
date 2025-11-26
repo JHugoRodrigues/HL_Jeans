@@ -1,11 +1,7 @@
 package model;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import model.entities.ProdutoAbstrato;
-import model.factories.FabricaAbstrata;
-import model.factories.FabricaCalcaJeans;
 
 public class Estoque {
     private List<ProdutoAbstrato> produtos = new ArrayList<>();
@@ -30,4 +26,6 @@ public class Estoque {
         }
         return null;
     }
+    
+    
 }

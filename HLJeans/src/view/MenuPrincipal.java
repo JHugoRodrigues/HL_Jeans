@@ -1,18 +1,17 @@
 package view;
-
 import java.util.Scanner;
+
+import controller.ManipuladorArquivoEstoque;
 import controller.SistemaController;
 import model.*;
 import model.entities.ProdutoAbstrato;
-import model.factories.FabricaAbstrata;
-import model.factories.FabricaCalcaJeans;
-import model.factories.FabricaJaquetaJeans;
-import model.factories.FabricaShortsJeans;
 
 public class MenuPrincipal {
+	
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         SistemaController sistema = new SistemaController();
+        ManipuladorArquivoEstoque.getInstance();
 
         // Cadastro inicial
         Administrador admin = new Administrador("Admin", "admin@hljeans.com", "1234", "Gerente");
@@ -20,20 +19,6 @@ public class MenuPrincipal {
 
         Cliente cliente = new Cliente("Hugo", "hugo@email.com", "123", "Rua A, 123");
         sistema.cadastrarUsuario(cliente);
-
-        // Produtos de exemplo
-        FabricaAbstrata fabricaCalca = new FabricaCalcaJeans();
-        FabricaAbstrata fabricaJaqueta = new FabricaJaquetaJeans();
-        FabricaAbstrata fabricaShort = new FabricaShortsJeans();
-
-        //Falta testar!
-        ProdutoAbstrato p1 = fabricaCalca.criarProduto("HL Premium", 4, 159.90);
-        ProdutoAbstrato p2 = fabricaJaqueta.criarProduto("HL Comfort", 6, 229.90);
-        ProdutoAbstrato p3 = fabricaShort.criarProduto("HL Summer", 10, 119.90);
-        
-        sistema.getEstoque().adicionarProduto(p1);
-        
-       
 
         System.out.println("=== HL JEANS ===");
         System.out.print("Email: ");
@@ -45,10 +30,36 @@ public class MenuPrincipal {
 
         if (logado == null) {
             System.out.println("Credenciais inválidas!");
+            
         } else if (logado instanceof Administrador) {
             System.out.println("\nBem-vindo, administrador!");
-            sistema.getEstoque().listarProdutos();
-        } else if (logado instanceof Cliente) {
+            sistema.getEstoque().carregarEstoque();
+            int opcao;
+            do {
+                System.out.println("\n1 - Listar produtos");
+                System.out.println("2 - Adicionar produtos");
+                System.out.println("0 - Sair");
+                System.out.print("Opção: ");
+                opcao = sc.nextInt();
+                sc.nextLine();
+
+                switch (opcao) {
+                    case 1:
+                        sistema.getEstoque().carregarEstoque();
+                        break;
+                    case 2:
+                    	 System.out.print("Nome do produto: ");
+                         String nomeProd = sc.nextLine();
+                         System.out.print("Quantidade do produto: ");
+                         String qtdProd = sc.nextLine();
+                         System.out.print("Preço do produto: ");
+                         String precoProd = sc.nextLine();
+                         
+                }
+             } while (opcao != 0);
+            	 
+            
+        }else if (logado instanceof Cliente) {
             Cliente c = (Cliente) logado;
             int opcao;
             do {
@@ -63,14 +74,14 @@ public class MenuPrincipal {
 
                 switch (opcao) {
                     case 1:
-                        sistema.getEstoque().listarProdutos();
+                        sistema.getEstoque().carregarEstoque();
                         break;
                     case 2:
                         System.out.print("Nome do produto: ");
                         String nomeProd = sc.nextLine();
-                        ProdutoAbstrato p = sistema.getEstoque().buscarProduto(nomeProd);
+                        ProdutoAbstrato p = sistema.getEstoque().pesquisarProduto(nomeProd);
                         if (p == null) {
-                            System.out.println("Produto não encontrado!");
+                            System.out.println("Produto não encontrado!");    
                         } else {
                             System.out.print("Quantidade: ");
                             int qtd = sc.nextInt();
@@ -86,6 +97,8 @@ public class MenuPrincipal {
                         Pedido pedido = new Pedido(c, c.getCarrinho().getItens(), total);
                         pedido.exibirResumo();
                         c.getCarrinho().limpar();
+                        sistema.getEstoque().atualizarEstoque(c.getCarrinho().retornarProduto(), c.getCarrinho().retornarQtd());
+                        sistema.getEstoque().salvarEstoque();
                         break;
                     case 0:
                         System.out.println("Saindo...");

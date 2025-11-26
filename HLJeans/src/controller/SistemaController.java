@@ -6,7 +6,8 @@ import model.*;
 
 public class SistemaController {
     private List<Usuario> usuarios = new ArrayList<>();
-    private Estoque estoque = new Estoque();
+    //private Estoque estoque = new Estoque();
+    private ManipuladorArquivoEstoque estoque = new ManipuladorArquivoEstoque();
 
     public void cadastrarUsuario(Usuario usuario) {
         usuarios.add(usuario);
@@ -20,8 +21,8 @@ public class SistemaController {
         }
         return null;
     }
-
-    public Estoque getEstoque() {
+    
+    public ManipuladorArquivoEstoque getEstoque() {
         return estoque;
     }
 }
