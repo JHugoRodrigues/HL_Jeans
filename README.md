@@ -91,4 +91,5 @@ O sistema visa aplicar os conceitos de engenharia de software, modelagem UML e p
 Para testar as funcionalidades de administrador, utilize as credenciais abaixo:
 
 **Email: admin@hljeans.com**
+
 **Senha: 1234**
