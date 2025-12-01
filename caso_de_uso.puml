@@ -1,0 +1,39 @@
+@startuml HL Jeans
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Cliente (Autenticado)" as c
+actor "Administrador (Autenticado)" as a
+actor "Visitante" as v
+
+rectangle "HL Jeans" {
+
+  usecase "Realizar Login" as UC_Login
+  usecase "Cadastrar-se" as UC_Cadastro
+
+  usecase "Listar Produtos" as UC_Listar
+  usecase "Gerenciar Carrinho" as UC_Carrinho
+  usecase "Finalizar Compra" as UC_Comprar
+  
+  usecase "Cadastrar Produto" as UC_CadProduto
+
+  v --> UC_Login
+  v --> UC_Cadastro
+
+  c --> UC_Listar
+  c --> UC_Carrinho
+  c --> UC_Comprar
+
+  a --> UC_Listar
+  a --> UC_CadProduto
+  
+  UC_Carrinho <.. UC_Comprar : <<estende>>
+}
+
+note right of UC_Login
+  O Login é pré-requisito para
+  acessar as funcionalidades
+  de Cliente e Administrador.
+end note
+
+@enduml

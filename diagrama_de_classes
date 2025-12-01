@@ -1,0 +1,148 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+skinparam classBackgroundColor WhiteSmoke
+skinparam classBorderColor Black
+skinparam packageStyle rectangle
+
+title Diagrama de Classes - HL Jeans (Versão SQL)
+
+package view {
+    class MenuPrincipal {
+        +main(args: String[])
+        +menuAdministrador(sc: Scanner, sys: SistemaController, user: Usuario)
+        +menuCliente(sc: Scanner, sys: SistemaController, cliente: Cliente)
+    }
+}
+
+package controller {
+    class SistemaController {
+        -usuarios : List<Usuario>
+        -usuarioDAO : UsuarioDAO
+        -produtoDAO : ProdutoDAO
+        -pedidoDAO : PedidoDAO
+        +SistemaController()
+        +login(email: String, senha: String) : Usuario
+        +cadastrarUsuario(usuario: Usuario)
+        +cadastrarProduto(produto: ProdutoAbstrato)
+        +listarProdutos() : List<ProdutoAbstrato>
+        +buscarProdutoPorNome(nome: String) : ProdutoAbstrato
+        +realizarVenda(cliente: Cliente, itens: Map, total: double)
+    }
+}
+
+package model.dao {
+    class ConexaoFactory {
+        {static} +getConnection() : Connection
+    }
+
+    class UsuarioDAO {
+        +salvar(u: Usuario)
+        +listar() : List<Usuario>
+    }
+
+    class ProdutoDAO {
+        -fabricaCalca : FabricaAbstrata
+        -fabricaShorts : FabricaAbstrata
+        -fabricaJaqueta : FabricaAbstrata
+        +salvar(p: ProdutoAbstrato)
+        +listar() : List<ProdutoAbstrato>
+        +atualizarEstoque(p: ProdutoAbstrato)
+    }
+
+    class PedidoDAO {
+        +salvarPedido(c: Cliente, itens: Map, total: double)
+    }
+}
+
+package model.factories {
+    abstract class FabricaAbstrata {
+        {abstract} +criarProduto(nome: String, qtd: int, preco: double) : ProdutoAbstrato
+    }
+    class FabricaCalcaJeans
+    class FabricaShortsJeans
+    class FabricaJaquetaJeans
+}
+
+package model.entities {
+    abstract class Usuario {
+        #id : int
+        #nome : String
+        #email : String
+        #senha : String
+        +fazerLogin(email: String, senha: String) : boolean
+        +getId() : int
+        +setId(id: int)
+        ' Getters e Setters omitidos para economizar espaço
+    }
+
+    class Cliente {
+        -endereco : String
+        -carrinho : Carrinho
+        +getCarrinho() : Carrinho
+    }
+
+    class Administrador {
+        -cargo : String
+    }
+
+    abstract class ProdutoAbstrato {
+        #id : int
+        #nome : String
+        #qtdEstoque : int
+        #preco : double
+        +verificarDisponibilidade(qtd: int) : boolean
+        +darBaixa(qtd: int)
+        +getId() : int
+        +setId(id: int)
+    }
+
+    class CalcaJeans
+    class ShortsJeans
+    class JaquetaJeans
+
+    class Carrinho {
+        -itens : Map<ProdutoAbstrato, Integer>
+        +adicionarProduto(p: ProdutoAbstrato, qtd: int)
+        +removerProduto(p: ProdutoAbstrato)
+        +calcularTotal() : double
+        +exibirCarrinho()
+        +limpar()
+    }
+
+    class Pedido {
+        -cliente : Cliente
+        -itens : Map<ProdutoAbstrato, Integer>
+        -valorTotal : double
+        +exibirResumo()
+    }
+}
+
+' Conexões MVC
+MenuPrincipal ..> SistemaController : <<usa>>
+SistemaController --> UsuarioDAO
+SistemaController --> ProdutoDAO
+SistemaController --> PedidoDAO
+
+' Conexões DAO
+UsuarioDAO ..> ConexaoFactory : <<usa>>
+ProdutoDAO ..> ConexaoFactory : <<usa>>
+PedidoDAO ..> ConexaoFactory : <<usa>>
+
+Usuario <|-- Cliente
+Usuario <|-- Administrador
+ProdutoAbstrato <|-- CalcaJeans
+ProdutoAbstrato <|-- ShortsJeans
+ProdutoAbstrato <|-- JaquetaJeans
+
+FabricaAbstrata <|-- FabricaCalcaJeans
+FabricaAbstrata <|-- FabricaShortsJeans
+FabricaAbstrata <|-- FabricaJaquetaJeans
+
+Cliente *-- Carrinho : 1:1
+Pedido --> Cliente : pertence a
+Pedido --> ProdutoAbstrato : 1:N
+
+ProdutoDAO ..> FabricaAbstrata
+
+@enduml
