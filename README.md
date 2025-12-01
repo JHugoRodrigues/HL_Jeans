@@ -59,6 +59,7 @@ O sistema visa aplicar os conceitos de engenharia de software, modelagem UML e p
 - Modelo UML: PlantUML
 - Execução: Linha de comando (Terminal)
 - Banco de Dados: PostgreSQL
+- Conectividade: JDBC (Java Database Connectivity)
 - IDE Recomendada: Eclipse ou IntelliJ IDEA
 
 # ⚙️ Como Executar o Projeto
