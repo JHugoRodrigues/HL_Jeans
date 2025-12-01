@@ -3,6 +3,7 @@
 # 👥 Integrantes
 
 José Hugo Rodrigues de Souza
+
 Lucas Nascimento Barros
 
 # 🏫 Informações do Projeto
