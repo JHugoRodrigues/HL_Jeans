@@ -23,16 +23,13 @@ O sistema visa aplicar os conceitos de engenharia de software, modelagem UML e p
 2. Fazer login.
 3. Pesquisar produtos no catálogo.
 4. Adicionar produtos ao carrinho de compras.
-5. Remover produtos do carrinho.
-6. Finalizar compra.
-7. Visualizar histórico de compras.
+5. Finalizar compra.
 
 🧑‍💼 Administrador
 
 1. Fazer login como administrador.
-2. Adicionar, editar e remover produtos do catálogo.
-3. Modificar o estoque e preços.
-4. Consultar pedidos realizados pelos clientes.
+2. Adicionar produtos ao catálogo.
+3. Modificar o estoque e preços..
 
 # ⚙️ Funcionalidades Implementadas 
 
